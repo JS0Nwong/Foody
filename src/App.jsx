@@ -1,16 +1,24 @@
 import { useState } from 'react'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import PrivateRoute from './components/utils/privateRoute';
 import {
-  HomepageContainer
+  HomepageContainer,
+  ProfileContainer
 } from "./components/containers"
+import { AuthProvider } from './components/utils/authContext';
 import './App.css'
 
 function App() {
   return (
     <div className='App'>
-      <Routes>
-        <Route path="" element={<HomepageContainer />}/>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<HomepageContainer />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<ProfileContainer />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </div>
   )
 }
